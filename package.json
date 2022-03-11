@@ -1,5 +1,5 @@
 {
-  "name": "loopback-next-acl",
+  "name": "loopback4-acl",
   "version": "0.0.1",
   "description": "LoopBack 4 controlling data access",
   "main": "dist/index.js",
@@ -10,6 +10,7 @@
   "scripts": {
     "build": "tsc",
     "pretest": "npm run build",
+    "prerelease": "npm run test",
     "test": "mocha \"dist/__tests__\""
   },
   "keywords": [
