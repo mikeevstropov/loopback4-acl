@@ -23,7 +23,7 @@ import {acl, ACLPrincipal, ACLPermission} from "loopback4-acl-component";
 export class UserController {
 
   @acl.rules([{
-    principal: ACLCommonPrincipal.AUTHENTICATED,
+    principal: ACLPrincipal.AUTHENTICATED,
     permission: ACLPermission.ALLOW,
   }])
   @get('/users/whoAmI')
