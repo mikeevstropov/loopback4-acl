@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "useUnknownInCatchVariables": false,
+    "lib": ["es2020"],
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "target": "es2018",
+    "sourceMap": true,
+    "declaration": true,
+    "importHelpers": true,
+    "outDir": "dist",
+    "rootDir": "src",
+  },
+  "include": [
+    "src"
+  ]
+}
