@@ -1,5 +1,5 @@
 {
-  "name": "loopback4-acl-component",
+  "name": "@mikeevstropov/loopback4-acl",
   "version": "0.0.1",
   "description": "A LoopBack 4 component for Permission based authorization support.",
   "main": "dist/index.js",
