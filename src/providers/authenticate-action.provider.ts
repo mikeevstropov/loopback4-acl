@@ -1,8 +1,8 @@
 import {ACLBindings} from '../keys';
 import {Request} from '@loopback/rest';
-import {ACLPrincipal} from '../decorators';
 import {ACLTokenService} from '../services';
 import {Entity} from '@loopback/repository';
+import {ACLAnyPrincipal} from '../decorators';
 import {ACLUserService, TokenPayload} from '../services';
 import {inject, Setter, Provider} from '@loopback/context';
 
@@ -17,7 +17,7 @@ export class AuthenticateActionProvider implements Provider<AuthenticateFn> {
     @inject.setter(ACLBindings.SESSION_USER)
     readonly setSessionUser: Setter<Entity | undefined>,
     @inject.setter(ACLBindings.SESSION_PRINCIPALS)
-    readonly setSessionPrincipals: Setter<ACLPrincipal[]>,
+    readonly setSessionPrincipals: Setter<ACLAnyPrincipal[]>,
   ) {}
 
   value(): AuthenticateFn {

@@ -5,7 +5,7 @@ import {ACLTokenService} from './services';
 import {AuthenticateFn} from './providers';
 import {Entity} from "@loopback/repository";
 import {ACLComponent} from "./acl-component";
-import {ACLMetadata, ACLPrincipal} from './decorators';
+import {ACLMetadata, ACLAnyPrincipal} from './decorators';
 import {BindingKey, MetadataAccessor} from '@loopback/core';
 
 export namespace ACLBindings {
@@ -39,7 +39,7 @@ export namespace ACLBindings {
   export const SESSION_USER = BindingKey.create<Entity | undefined>(
     'acl.session.user',
   );
-  export const SESSION_PRINCIPALS = BindingKey.create<ACLPrincipal[]>(
+  export const SESSION_PRINCIPALS = BindingKey.create<ACLAnyPrincipal[]>(
     'acl.session.principals',
   );
 }

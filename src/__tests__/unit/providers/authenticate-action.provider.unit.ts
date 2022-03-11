@@ -1,8 +1,8 @@
 import {
   ACLBindings,
-  ACLPrincipal,
   ACLUserService,
   AuthenticateFn,
+  ACLAnyPrincipal,
   ACLTokenService,
   AuthenticateActionProvider,
 } from "../../../index";
@@ -80,7 +80,7 @@ describe('AuthenticateActionProvider', () => {
   describe('value()', () => {
     let provider: AuthenticateActionProvider;
     let sessionUser: Entity | undefined;
-    let sessionPrincipals: ACLPrincipal[];
+    let sessionPrincipals: ACLAnyPrincipal[];
 
     beforeEach(() => {
       givenAuthenticateActionProvider();
@@ -135,7 +135,7 @@ describe('AuthenticateActionProvider', () => {
         tokenService,
         userService,
         (value: Entity | undefined) => sessionUser = value,
-        (value: ACLPrincipal[]) => sessionPrincipals = value,
+        (value: ACLAnyPrincipal[]) => sessionPrincipals = value,
       );
     }
   });

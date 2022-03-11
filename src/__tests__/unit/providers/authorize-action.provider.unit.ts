@@ -1,11 +1,11 @@
 import {
   ACLBindings,
-  ACLCommonPrincipal,
   ACLMetadata,
-  ACLPermission,
-  ACLPrincipal,
-  AuthorizeActionProvider,
   AuthorizeFn,
+  ACLPrincipal,
+  ACLPermission,
+  ACLAnyPrincipal,
+  AuthorizeActionProvider,
 } from "../../../index";
 import {mockPrincipals, mockUser,} from "../fixtures/mock-user-service";
 import {expect, use} from "chai";
@@ -58,7 +58,7 @@ describe('AuthorizeActionProvider', () => {
     // Testing $everyone
     it('returns false if $everyone is denied without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.DENY
       }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -68,7 +68,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns false if $everyone is denied with session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY
         }]}
       const provider = givenAuthorizeActionProvider(
@@ -81,7 +81,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $everyone is allowed without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -91,7 +91,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $everyone is allowed with session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(
@@ -105,7 +105,7 @@ describe('AuthorizeActionProvider', () => {
     // Testing $authenticated
     it('returns true if $authenticated is denied without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.DENY
       }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -115,7 +115,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns false if $authenticated is denied with session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.DENY
       }]}
       const provider = givenAuthorizeActionProvider(
@@ -128,7 +128,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $authenticated is allowed without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -138,7 +138,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $authenticated is allowed with session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(
@@ -152,7 +152,7 @@ describe('AuthorizeActionProvider', () => {
     // Testing $owner
     it('returns true if $owner is denied without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.DENY
         }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -163,7 +163,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $owner is denied with non-owner session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.OWNER,
+        principal: ACLPrincipal.OWNER,
         permission: ACLPermission.DENY
       }]}
       const provider = givenAuthorizeActionProvider(
@@ -177,7 +177,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns false if $owner is denied with owner session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.DENY
         }]}
       const provider = givenAuthorizeActionProvider(
@@ -190,7 +190,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $owner is allowed without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -201,7 +201,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $owner is allowed with non-owner session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(
@@ -215,7 +215,7 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $owner is allowed with owner session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.OWNER,
+        principal: ACLPrincipal.OWNER,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(
@@ -353,10 +353,10 @@ describe('AuthorizeActionProvider', () => {
     // Testing $everyone with $authenticated
     it('returns false if $everyone is denied and $authenticated is allowed without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.DENY
       },{
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -366,10 +366,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $everyone is denied and $authenticated is allowed with session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY
         },{
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -379,10 +379,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $everyone is allowed and $authenticated is allowed without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.ALLOW
       },{
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -392,10 +392,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $everyone is allowed and $authenticated is denied without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.ALLOW
         },{
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.DENY
         }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -405,10 +405,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns false if $everyone is allowed and $authenticated is denied with session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.ALLOW
         },{
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.DENY
         }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -419,10 +419,10 @@ describe('AuthorizeActionProvider', () => {
     // Testing $everyone with $owner
     it('returns false if $everyone is denied and $owner is allowed without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.DENY
       },{
-        principal: ACLCommonPrincipal.OWNER,
+        principal: ACLPrincipal.OWNER,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -432,10 +432,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns false if $everyone is denied and $owner is allowed with non-owner user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY
         },{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -446,10 +446,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $everyone is denied and $owner is allowed with owner user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY
         },{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -459,10 +459,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $everyone is allowed and $owner is allowed without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.ALLOW
       },{
-        principal: ACLCommonPrincipal.OWNER,
+        principal: ACLPrincipal.OWNER,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -472,10 +472,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $everyone is allowed and $owner is allowed with non-owner user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.ALLOW
       },{
-        principal: ACLCommonPrincipal.OWNER,
+        principal: ACLPrincipal.OWNER,
         permission: ACLPermission.ALLOW
       }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -486,10 +486,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns false if $everyone is allowed and $owner is denied with owner user', async () => {
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.ALLOW
       },{
-        principal: ACLCommonPrincipal.OWNER,
+        principal: ACLPrincipal.OWNER,
         permission: ACLPermission.DENY
       }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -500,10 +500,10 @@ describe('AuthorizeActionProvider', () => {
     // Testing $authenticated with $owner
     it('returns true if $authenticated is denied and $owner is allowed without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.DENY
         },{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -513,10 +513,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns false if $authenticated is denied and $owner is allowed with non-owner user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.DENY
         },{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -527,10 +527,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $authenticated is denied and $owner is allowed with owner user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.DENY
         },{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -540,10 +540,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $authenticated is allowed and $owner is allowed without session user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.ALLOW
         },{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(metadata);
@@ -553,10 +553,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns true if $authenticated is allowed and $owner is allowed with non-owner user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.ALLOW
         },{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.ALLOW
         }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -567,10 +567,10 @@ describe('AuthorizeActionProvider', () => {
     });
     it('returns false if $authenticated is allowed and $owner is denied with owner user', async () => {
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.ALLOW
         },{
-          principal: ACLCommonPrincipal.OWNER,
+          principal: ACLPrincipal.OWNER,
           permission: ACLPermission.DENY
         }]}
       const provider = givenAuthorizeActionProvider(metadata, mockUser);
@@ -582,7 +582,7 @@ describe('AuthorizeActionProvider', () => {
     it('returns false if $everyone is denied and specific principal is allowed without session user', async () => {
       const specificPrincipal = 'specific-principal';
       const metadata: ACLMetadata = {rules: [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.DENY
       },{
         principal: specificPrincipal,
@@ -597,7 +597,7 @@ describe('AuthorizeActionProvider', () => {
       const specificPrincipal = 'specific-principal';
       const unknownPrincipal = 'unknown-principal'
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY
         },{
           principal: specificPrincipal,
@@ -615,7 +615,7 @@ describe('AuthorizeActionProvider', () => {
     it('returns true if $everyone is denied and specific principal is allowed with matched user principal', async () => {
       const specificPrincipal = 'specific-principal';
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY
         },{
           principal: specificPrincipal,
@@ -633,7 +633,7 @@ describe('AuthorizeActionProvider', () => {
     it('returns false if $everyone is denied and specific principal is denied with matched user principal', async () => {
       const specificPrincipal = 'specific-principal';
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY
         },{
           principal: specificPrincipal,
@@ -651,7 +651,7 @@ describe('AuthorizeActionProvider', () => {
     it('returns true if $everyone is allowed and specific principal is allowed without session user', async () => {
       const specificPrincipal = 'specific-principal';
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.ALLOW
         },{
           principal: specificPrincipal,
@@ -666,7 +666,7 @@ describe('AuthorizeActionProvider', () => {
       const specificPrincipal = 'specific-principal';
       const unknownPrincipal = 'unknown-principal'
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.ALLOW
         },{
           principal: specificPrincipal,
@@ -684,7 +684,7 @@ describe('AuthorizeActionProvider', () => {
     it('returns true if $everyone is allowed and specific principal is allowed with matched user principal', async () => {
       const specificPrincipal = 'specific-principal';
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.ALLOW
         },{
           principal: specificPrincipal,
@@ -702,7 +702,7 @@ describe('AuthorizeActionProvider', () => {
     it('returns false if $everyone is allowed and specific principal is denied with matched user principal', async () => {
       const specificPrincipal = 'specific-principal';
       const metadata: ACLMetadata = {rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.ALLOW
         },{
           principal: specificPrincipal,
@@ -721,7 +721,7 @@ describe('AuthorizeActionProvider', () => {
     function givenAuthorizeActionProvider(
       metadata?: ACLMetadata,
       sessionUser?: Entity,
-      sessionPrincipals?: ACLPrincipal[],
+      sessionPrincipals?: ACLAnyPrincipal[],
     ) {
       return new AuthorizeActionProvider(
         () => Promise.resolve(metadata),

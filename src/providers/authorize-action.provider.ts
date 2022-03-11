@@ -3,7 +3,7 @@ import {
   ACLMetadata,
   ACLPrincipal,
   ACLPermission,
-  ACLCommonPrincipal,
+  ACLAnyPrincipal,
 } from '../decorators';
 import {ACLBindings} from '../keys';
 import {Getter} from '@loopback/core';
@@ -20,7 +20,7 @@ export class AuthorizeActionProvider implements Provider<AuthorizeFn> {
     @inject.getter(ACLBindings.SESSION_USER)
     readonly getSessionUser: Getter<Entity | undefined>,
     @inject.getter(ACLBindings.SESSION_PRINCIPALS)
-    readonly getSessionPrincipals: Getter<ACLPrincipal[] | undefined>,
+    readonly getSessionPrincipals: Getter<ACLAnyPrincipal[] | undefined>,
   ) {}
 
   value(): AuthorizeFn {
@@ -60,21 +60,21 @@ export class AuthorizeActionProvider implements Provider<AuthorizeFn> {
       // Common rule.
       if (commonPrincipals.includes(rule.principal)) {
         // $owner
-        if (rule.principal === ACLCommonPrincipal.OWNER) {
+        if (rule.principal === ACLPrincipal.OWNER) {
           if (rule.permission === ACLPermission.ALLOW)
             allowedByOwnerPrincipal = true;
           if (rule.permission === ACLPermission.DENY)
             deniedByOwnerPrincipal = true;
         }
         // $authenticated
-        if (rule.principal === ACLCommonPrincipal.AUTHENTICATED) {
+        if (rule.principal === ACLPrincipal.AUTHENTICATED) {
           if (rule.permission === ACLPermission.ALLOW)
             allowedByAuthenticatedPrincipal = true;
           if (rule.permission === ACLPermission.DENY)
             deniedByAuthenticatedPrincipal = true;
         }
         // $everyone
-        if (rule.principal === ACLCommonPrincipal.EVERYONE) {
+        if (rule.principal === ACLPrincipal.EVERYONE) {
           if (rule.permission === ACLPermission.ALLOW)
             allowedByEveryonePrincipal = true;
           if (rule.permission === ACLPermission.DENY)
@@ -98,19 +98,19 @@ export class AuthorizeActionProvider implements Provider<AuthorizeFn> {
     return true;
   }
 
-  public static getCommonPrincipals(request: Request, user?: AnyObject): ACLCommonPrincipal[] {
+  public static getCommonPrincipals(request: Request, user?: AnyObject): ACLPrincipal[] {
     const principals = [];
     // Has '$everyone'
-    principals.push(ACLCommonPrincipal.EVERYONE);
+    principals.push(ACLPrincipal.EVERYONE);
     if (user) {
       // Has '$authenticated'
-      principals.push(ACLCommonPrincipal.AUTHENTICATED)
+      principals.push(ACLPrincipal.AUTHENTICATED)
       // Has '$owner'
       const userId = user?.id + '';
       const path = request.path ?? '';
       const regex = new RegExp(`\/${userId}($|[\/\?])`);
       const idInPath = regex.test(path);
-      if (idInPath) principals.push(ACLCommonPrincipal.OWNER);
+      if (idInPath) principals.push(ACLPrincipal.OWNER);
     }
     return principals;
   }

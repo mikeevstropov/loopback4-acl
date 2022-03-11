@@ -16,17 +16,17 @@ export enum ACLPermission {
   ALLOW = 'allow',
 }
 
-export enum ACLCommonPrincipal {
+export enum ACLPrincipal {
   OWNER = '$owner',
   EVERYONE = '$everyone',
   AUTHENTICATED = '$authenticated',
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ACLPrincipal = ACLCommonPrincipal | any;
+export type ACLAnyPrincipal = ACLPrincipal | any;
 
 export type ACLRule = {
-  principal: ACLPrincipal;
+  principal: ACLAnyPrincipal;
   permission: ACLPermission;
   method?: string;
 }

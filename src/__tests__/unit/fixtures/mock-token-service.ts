@@ -1,10 +1,8 @@
 import {
-  ACLPrincipal,
   TokenPayload,
-  ACLTokenService, TokenDetails,
+  TokenDetails,
+  ACLTokenService,
 } from "../../../";
-import {MockUser} from "./mock-user";
-import {Entity} from "@loopback/repository";
 
 export const mockTokenPayload = {uid: 'uid', key: 'key'};
 export const mockTokenDetails = {value: 'token', expiresIn: 0};

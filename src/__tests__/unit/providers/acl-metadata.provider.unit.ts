@@ -3,8 +3,8 @@ import {
   ACLRule,
   ACLMetadata,
   ACLBindings,
+  ACLPrincipal,
   ACLPermission,
-  ACLCommonPrincipal,
   ACLMetadataProvider,
 } from "../../../";
 import {expect} from "chai";
@@ -22,11 +22,11 @@ describe('ACLMetadataProvider', () => {
 
   const classRules: ACLRule[] = [
     {
-      principal: ACLCommonPrincipal.EVERYONE,
+      principal: ACLPrincipal.EVERYONE,
       permission: ACLPermission.DENY,
     },
     {
-      principal: ACLCommonPrincipal.AUTHENTICATED,
+      principal: ACLPrincipal.AUTHENTICATED,
       permission: ACLPermission.ALLOW,
     },
   ];
@@ -59,12 +59,12 @@ describe('ACLMetadataProvider', () => {
     const aclMetadata: ACLMetadata | undefined = await provider.value();
     const rules = aclMetadata?.rules;
     expect(rules?.[0]).to.eql({
-      principal: ACLCommonPrincipal.EVERYONE,
+      principal: ACLPrincipal.EVERYONE,
       permission: ACLPermission.DENY,
       method: 'whoAmI',
     });
     expect(rules?.[1]).to.eql({
-      principal: ACLCommonPrincipal.AUTHENTICATED,
+      principal: ACLPrincipal.AUTHENTICATED,
       permission: ACLPermission.ALLOW,
       method: 'whoAmI',
     });

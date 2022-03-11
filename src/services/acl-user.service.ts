@@ -1,5 +1,5 @@
 import {Entity} from '@loopback/repository';
-import {ACLPrincipal} from '../decorators';
+import {ACLAnyPrincipal} from '../decorators';
 import {TokenPayload} from './acl-token.service';
 
 export interface ACLUserService {
@@ -12,5 +12,5 @@ export interface ACLUserService {
   /**
    * Resolve role-like names of the User.
    */
-  resolvePrincipals(user: Entity): Promise<ACLPrincipal[]>;
+  resolvePrincipals(user: Entity): Promise<ACLAnyPrincipal[]>;
 }

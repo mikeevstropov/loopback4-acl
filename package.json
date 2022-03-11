@@ -1,7 +1,7 @@
 {
-  "name": "loopback4-acl",
+  "name": "loopback4-acl-component",
   "version": "0.0.1",
-  "description": "LoopBack 4 controlling data access",
+  "description": "A LoopBack 4 component for Permission based authorization support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "engines": {

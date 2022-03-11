@@ -1,9 +1,9 @@
 import {
   acl,
   ACLMetadata,
+  ACLPrincipal,
   ACLPermission,
   getAclMetadata,
-  ACLCommonPrincipal,
 } from '../../..';
 import {use} from 'chai';
 import {expect} from 'chai';
@@ -44,11 +44,11 @@ describe('ACL', () => {
     it('can add metadata in class level', () => {
       const metadata: ACLMetadata = {
         rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY,
           method: 'whoAmI',
         }, {
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.ALLOW,
           method: 'whoAmI',
         }],
@@ -66,11 +66,11 @@ describe('ACL', () => {
     it('can add metadata in method level', () => {
       const metadata: ACLMetadata = {
         rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY,
           method: 'whoAmI',
         }, {
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.ALLOW,
           method: 'whoAmI',
         }],
@@ -88,11 +88,11 @@ describe('ACL', () => {
     it('can merge class and method metadata', () => {
       const classMetadata = {
         rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.DENY,
           method: 'whoAmI'
         }, {
-          principal: ACLCommonPrincipal.AUTHENTICATED,
+          principal: ACLPrincipal.AUTHENTICATED,
           permission: ACLPermission.ALLOW,
           method: 'whoAmI'
         }],
@@ -100,7 +100,7 @@ describe('ACL', () => {
       };
       const methodMetadata = {
         rules: [{
-          principal: ACLCommonPrincipal.EVERYONE,
+          principal: ACLPrincipal.EVERYONE,
           permission: ACLPermission.ALLOW,
           method: 'whoAmI'
         }],
@@ -148,10 +148,10 @@ describe('ACL', () => {
   describe('@acl.rules() decorator', () => {
     it('can add rules option in class level', () => {
       const rules = [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.DENY,
       }, {
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.ALLOW,
       }];
 
@@ -166,10 +166,10 @@ describe('ACL', () => {
     });
     it('can add rules option in method level', () => {
       const rules = [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.DENY,
       }, {
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.ALLOW,
       }];
 
@@ -184,14 +184,14 @@ describe('ACL', () => {
     });
     it('can merge class and method rules option', () => {
       const classRules = [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.DENY,
       }, {
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.ALLOW,
       }];
       const methodRules = [{
-        principal: ACLCommonPrincipal.EVERYONE,
+        principal: ACLPrincipal.EVERYONE,
         permission: ACLPermission.ALLOW,
       }];
 
@@ -207,7 +207,7 @@ describe('ACL', () => {
     });
     it('can merge duplicated rules of class and method levels', () => {
       const rule = {
-        principal: ACLCommonPrincipal.AUTHENTICATED,
+        principal: ACLPrincipal.AUTHENTICATED,
         permission: ACLPermission.ALLOW,
       };
 
