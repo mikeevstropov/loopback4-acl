@@ -1,4 +1,4 @@
-# loopback4-acl-component
+# @mikeevstropov/loopback4-acl
 
 A LoopBack 4 component for Permission based authorization support.
 
