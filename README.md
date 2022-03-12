@@ -1,6 +1,6 @@
 # @mikeevstropov/loopback4-acl
 
-A LoopBack 4 component for Permission based authorization support.
+A LoopBack 4 component for JWT based authorization support.
 
 ## Installation
 
@@ -29,6 +29,55 @@ export class UserController {
   @get('/users/whoAmI')
   async whoAmI(): Promise<User> {
     // ...
+  }
+
+  @acl.rules([{
+    principal: 'admin', // specific role
+    permission: ACLPermission.ALLOW,
+  }])
+  @get('/users/test')
+  async test() {
+    // ...
+  }
+}
+```
+
+The **class level** decorator denies access to all endpoints of
+`UserController` for `EVERYONE`.
+
+But **method level** decorators allows the `whoAmI` method
+for `AUTHENTICATED` and `test` method for
+`admin` role.
+
+## How to make it work?
+
+- Implement your own `User` and `Role`.
+- Implement `ACLUserService` to resolve the user and his principals (roles).
+- Implement `login` method to expose JWT token.
+- Enable `ACLComponent` in your App.
+
+### Implement `ACLUserService`
+
+The User Service is designed to resolve a session user by `TokenPayload` and his owns
+principals (roles).
+
+```ts
+export class UserService implements ACLUserService {
+
+  constructor(
+    @repository(UserRepository)
+    public userRepository : UserRepository,
+  ) {}
+
+  public async resolveUser(tokenPayload: TokenPayload) {
+    return this.userRepository.findById(
+      tokenPayload.uid,
+      {include: ['roles']},
+    );
+  }
+
+  public async resolvePrincipals(user: UserWithRelations) {
+    return user.roles.map((role: Role) => role.name);
   }
 }
 ```
