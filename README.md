@@ -50,7 +50,7 @@ for `AUTHENTICATED` and `test` method for
 ## How to make it work?
 
 - Implement your own `User` and `Role`.
-- Implement `ACLUserService` to resolve the user and principals (roles).
+- Implement `ACLUserService` to resolve the user and roles.
 - Implement `login` method to expose JWT token.
 - Enable `ACLComponent` in your App.
 
