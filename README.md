@@ -46,9 +46,9 @@ for `AUTHENTICATED` and `test` method for
 
 ## How to make it work?
 
-1. Implement your own `User` (required) and `Role` (optional).
+1. Create your own `User` (required) and `Role` (optional).
 2. Implement `ACLUserService` to resolve the session user.
-3. Implement `login` method to expose JWT token.
+3. Create `login` method to expose JWT token.
 4. Mount `ACLComponent` in your App.
 
 ### Implement `ACLUserService`
@@ -86,7 +86,7 @@ export class UserService implements ACLUserService {
 }
 ```
 
-### Implement `login` method
+### Create `login` method
 
 It doesn't matter how you get the User instance in `login`
 method, but you need to generate JWT token from its `id`.
