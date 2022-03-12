@@ -54,7 +54,7 @@ for `AUTHENTICATED` and `test` method for
 ### Implement `ACLUserService`
 
 The User Service is designed to resolve an instance of session user
-by `TokenPayload` and its principals (roles) as option.
+by `TokenPayload` and its principals (roles).
 
 ```ts
 export class UserService implements ACLUserService {
