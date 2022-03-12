@@ -2,6 +2,13 @@
 
 A LoopBack 4 component for JWT based authorization support.
 
+## Features
+
+- Model-free. It allows to use your own User and Role models without strict fields scheme.
+- Access rules of controller and method level by cascading order.
+- JWT token authentication.
+- Role based authorization.
+
 ## Installation
 
 ```shell
