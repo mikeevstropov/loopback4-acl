@@ -10,7 +10,7 @@ npm install --save loopback4-acl-component
 
 ## Basic use
 
-The following example shows the basic use of `@acl.rules` decorator in class and method levels.
+The following example shows the basic use of `@acl.rules` decorator in class and method level.
 
 ```ts
 @acl.rules([{
@@ -39,8 +39,8 @@ export class UserController {
 }
 ```
 
-From above the *class level* decorator denies access to all endpoints of
-`UserController` for `EVERYONE`. But *method level* decorators allows the `whoAmI` method
+From above the class level decorator denies access to all endpoints of
+`UserController` for `EVERYONE`. But method level decorators allows the `whoAmI` method
 for `AUTHENTICATED` and `test` method for
 `admin` role.
 
