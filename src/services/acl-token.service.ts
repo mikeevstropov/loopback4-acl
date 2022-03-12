@@ -10,7 +10,7 @@ const verifyAsync = promisify(jwt.verify);
 
 export type TokenPayload = {
   uid: string,
-  key: string,
+  key?: string,
 }
 
 export type TokenDetails = {
