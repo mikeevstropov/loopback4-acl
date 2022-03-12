@@ -46,7 +46,7 @@ export class UserController {
 }
 ```
 
-The *class level* decorator denies access to all endpoints of
+From above the *class level* decorator denies access to all endpoints of
 `UserController` for `EVERYONE`. But *method level* decorators allows the `whoAmI` method
 for `AUTHENTICATED` and `test` method for
 `admin` role.
