@@ -5,7 +5,7 @@ A LoopBack 4 component for JWT based authorization support.
 ## Installation
 
 ```shell
-npm install --save loopback4-acl-component
+npm install --save @mikeevstropov/loopback4-acl
 ```
 
 ## Basic use
