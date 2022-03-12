@@ -13,13 +13,6 @@ npm install --save loopback4-acl-component
 The following example shows the basic use of `@acl.rules` decorator in class and method levels.
 
 ```ts
-import {
-  acl,
-  ACLPrincipal,
-  ACLPermission,
-} from "loopback4-acl-component";
-import {Entity} from "@loopback/repository";
-
 @acl.rules([{
   principal: ACLPrincipal.EVERYONE,
   permission: ACLPermission.DENY,
@@ -64,15 +57,6 @@ The User Service is designed to resolve a session user by `TokenPayload` and his
 principals (roles).
 
 ```ts
-import {
-  TokenPayload,
-  ACLUserService,
-  ACLAnyPrincipal,
-} from '@mikeevstropov/loopback4-acl';
-import {UserWithRelations} from '../models';
-import {UserRepository} from '../repositories';
-import {Entity, repository} from '@loopback/repository';
-
 export class UserService implements ACLUserService {
 
   constructor(
@@ -80,6 +64,9 @@ export class UserService implements ACLUserService {
     public userRepository : UserRepository,
   ) {}
 
+  /**
+   * Resolve the Session User instance.
+   */
   public async resolveUser(tokenPayload: TokenPayload) {
     return this.userRepository.findById(
       tokenPayload.uid,
@@ -87,6 +74,12 @@ export class UserService implements ACLUserService {
     );
   }
 
+  /**
+   * Resolve role-like names of the Session User.
+   * 
+   * Optional.
+   * Do return an empty array if you're not using roles.
+   */
   public async resolvePrincipals(user: UserWithRelations) {
     return user.roles.map((role: Role) => role.name);
   }
