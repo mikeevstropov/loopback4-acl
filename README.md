@@ -29,7 +29,18 @@ export class UserController {
   }
 
   @acl.rules([{
-    principal: 'admin', // specific role
+    principal: ACLPrincipal.OWNER,
+    permission: ACLPermission.ALLOW,
+  }])
+  @del('/users/{id}')
+  async deleteById(
+    @param.path.string('id') id: string,
+  ): Promise<void> {
+    // ...
+  }
+
+  @acl.rules([{
+    principal: 'admin', // user role
     permission: ACLPermission.ALLOW,
   }])
   @get('/users/test')
@@ -39,10 +50,10 @@ export class UserController {
 }
 ```
 
-From above the class level decorator denies access to all endpoints of
-`UserController` for `EVERYONE`. But method level decorators allows the `whoAmI` method
-for `AUTHENTICATED` and `test` method for
-`admin` role.
+From above the class-level decorator denies access to all endpoints of
+`UserController` for `EVERYONE`. Whereas method-level decorators allows the
+`whoAmI` method for `AUTHENTICATED`, method `deleteById` for `OWNER` and
+`test` method for `admin` role.
 
 ## How to make it work?
 
@@ -61,7 +72,7 @@ export class UserService implements ACLUserService {
 
   constructor(
     @repository(UserRepository)
-    public userRepository : UserRepository,
+    public userRepository: UserRepository,
   ) {}
 
   /**
