@@ -77,8 +77,8 @@ From above:
 
 ### Implement `ACLUserService`
 
-The User Service is designed to resolve an instance of session user
-by `TokenPayload` and its principals (roles).
+The User Service is designed to let you resolve an instance
+of session user and its roles as you prefer.
 
 ```ts
 export class UserService implements ACLUserService {
