@@ -49,7 +49,7 @@ for `AUTHENTICATED` and `test` method for
 1. Implement your own `User` (required) and `Role` (optional).
 2. Implement `ACLUserService` to resolve the session user.
 3. Implement `login` method to expose JWT token.
-4. Enable `ACLComponent` in your App.
+4. Mount `ACLComponent` in your App.
 
 ### Implement `ACLUserService`
 
@@ -85,3 +85,60 @@ export class UserService implements ACLUserService {
   }
 }
 ```
+
+### Implement `login` method
+
+It doesn't matter how you get the User instance in `login`
+method, but you need to generate JWT token from its `id`.
+
+```ts
+export class UserController {
+
+  constructor(
+    @repository(UserRepository)
+    public userRepository: UserRepository,
+    @inject(ACLBindings.TOKEN_SERVICE)
+    private tokenService: ACLTokenService,
+  ) {}
+
+  // ...
+
+  async login(
+    @requestBody(LoginRequestBody)
+    loginParameters: LoginParameters,
+  ): Promise<LoginResponse> {
+
+    // ...
+
+    const user = await this.userRepository.findOne({
+      where: {username, password}
+    });
+
+    if (!user)
+      throw HttpErrors.Forbidden();
+
+    const token = await this.tokenService.encode(
+      {uid: user.id},
+    );
+
+    return token;
+  }
+}
+```
+
+### Mount `ACLComponent`
+
+Finally, mount the ACL component to your *application.ts*
+
+```ts
+export class App extends BootMixin() {
+  
+  // ...
+
+  this.component(ACLComponent);
+}
+```
+
+## Tests
+
+run `npm test` from the root folder.
