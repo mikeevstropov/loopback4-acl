@@ -60,6 +60,15 @@ The User Service is designed to resolve a session user by `TokenPayload` and his
 principals (roles).
 
 ```ts
+import {
+  TokenPayload,
+  ACLUserService,
+  ACLAnyPrincipal,
+} from '@mikeevstropov/loopback4-acl';
+import {UserWithRelations} from '../models';
+import {UserRepository} from '../repositories';
+import {Entity, repository} from '@loopback/repository';
+
 export class UserService implements ACLUserService {
 
   constructor(
