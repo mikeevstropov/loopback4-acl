@@ -60,11 +60,11 @@ export class UserController {
   }
 }
 ```
-
-From above the class-level decorator denies access to all endpoints of
-`UserController` for `EVERYONE`. In turn, method-level decorators allows the
-`whoAmI` method for `AUTHENTICATED`, method `deleteById` for `OWNER` and
-`test` method for `admin` role.
+From above:
+- The class-level decorator denies access to all endpoints.
+- The method-level decorator allows `whoAmI` for `AUTHENTICATED`.
+- Method `deleteById` allowed for `OWNER`.
+- And `test` method allowed for `admin` role.
 
 ## How to make it work?
 
