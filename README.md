@@ -64,7 +64,7 @@ From above:
 - The class level decorator `@acl.rules` denies access to all endpoints.
 - The method level decorator allows `whoAmI` for `AUTHENTICATED`.
 - Method `deleteById` allowed for `OWNER`.
-- And `test` method allowed for `admin` role.
+- And `test` allowed for `admin` role.
 
 *Also, you can skip access checking in the method level by a sugar decorator `@acl.skip()`.*
 
