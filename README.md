@@ -135,9 +135,9 @@ export class UserController {
     if (!user)
       throw HttpErrors.Forbidden();
 
-    const token = await this.tokenService.encode(
-      {uid: user.id},
-    );
+    const token = await this.tokenService.encode({
+      uid: user.id,
+    });
 
     return token;
   }
