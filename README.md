@@ -142,3 +142,7 @@ export class App extends BootMixin() {
 ## Tests
 
 run `npm test` from the root folder.
+
+## License
+
+MIT
