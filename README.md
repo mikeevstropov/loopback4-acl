@@ -51,7 +51,7 @@ export class UserController {
 ```
 
 From above the class-level decorator denies access to all endpoints of
-`UserController` for `EVERYONE`. Whereas method-level decorators allows the
+`UserController` for `EVERYONE`. In turn, method-level decorators allows the
 `whoAmI` method for `AUTHENTICATED`, method `deleteById` for `OWNER` and
 `test` method for `admin` role.
 
