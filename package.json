@@ -4,13 +4,17 @@
   "description": "A LoopBack 4 component for Permission based authorization support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikeevstropov/loopback4-acl"
+  },
   "engines": {
     "node": "12 || 14 || 16 || 17"
   },
   "scripts": {
     "build": "tsc",
     "pretest": "npm run build",
-    "prerelease": "npm run test",
+    "prepublish": "npm run test",
     "test": "mocha \"dist/__tests__\""
   },
   "keywords": [
