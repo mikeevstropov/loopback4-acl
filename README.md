@@ -66,7 +66,7 @@ From above:
 - Method `deleteById` allowed for `OWNER`.
 - And `test` method allowed for `admin` role.
 
-*Also, you can skip access checking in method level by a sugar decorator `@acl.skip()`.*
+*Also, you can skip access checking in the method level by a sugar decorator `@acl.skip()`.*
 
 ## How to make it work?
 
