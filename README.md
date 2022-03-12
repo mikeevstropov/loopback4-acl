@@ -50,13 +50,13 @@ for `AUTHENTICATED` and `test` method for
 ## How to make it work?
 
 - Implement your own `User` and `Role`.
-- Implement `ACLUserService` to resolve the user and his principals (roles).
+- Implement `ACLUserService` to resolve the user and principals (roles).
 - Implement `login` method to expose JWT token.
 - Enable `ACLComponent` in your App.
 
 ### Implement `ACLUserService`
 
-The User Service is designed to resolve a session user by `TokenPayload` and his owns
+The User Service is designed to resolve a session user by `TokenPayload` and his
 principals (roles).
 
 ```ts
