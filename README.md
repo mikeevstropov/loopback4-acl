@@ -61,7 +61,7 @@ export class UserController {
 }
 ```
 From above:
-- The class-level decorator denies access to all endpoints.
+- The class-level decorator `@acl.rules` denies access to all endpoints.
 - The method-level decorator allows `whoAmI` for `AUTHENTICATED`.
 - Method `deleteById` allowed for `OWNER`.
 - And `test` method allowed for `admin` role.
