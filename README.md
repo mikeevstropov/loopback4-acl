@@ -13,8 +13,12 @@ npm install --save loopback4-acl-component
 The following example shows the basic use of `@acl.rules` decorator in class and method levels.
 
 ```ts
+import {
+  acl,
+  ACLPrincipal,
+  ACLPermission,
+} from "loopback4-acl-component";
 import {Entity} from "@loopback/repository";
-import {acl, ACLPrincipal, ACLPermission} from "loopback4-acl-component";
 
 @acl.rules([{
   principal: ACLPrincipal.EVERYONE,
