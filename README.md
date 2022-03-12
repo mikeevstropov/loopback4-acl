@@ -128,13 +128,15 @@ export class UserController {
 
 ### Mount `ACLComponent`
 
-Finally, mount the ACL component to your *application.ts*
+Finally, bind your own `ACLUserService` and mount
+the `ACLComponent` to your *application.ts*
 
 ```ts
 export class App extends BootMixin() {
   
   // ...
 
+  this.bind(ACLBindings.USER_SERVICE).toClass(UserService);
   this.component(ACLComponent);
 }
 ```
