@@ -1,6 +1,6 @@
 {
   "name": "@mikeevstropov/loopback4-acl",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A LoopBack 4 component for Permission based authorization support.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
