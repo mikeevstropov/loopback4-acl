@@ -15,6 +15,8 @@ export class ACLComponent implements Component {
     [ACLBindings.AUTHORIZE_ACTION.key]: AuthorizeActionProvider,
   };
   bindings: Binding[] = [
+    Binding.bind(ACLBindings.SESSION_USER).to(undefined),
+    Binding.bind(ACLBindings.SESSION_PRINCIPALS).to([]),
     Binding.bind(ACLBindings.TOKEN_SERVICE).toClass(ACLTokenService),
     Binding.bind(ACLBindings.TOKEN_SECRET).to(ACL_DEFAULT_TOKEN_SECRET),
     Binding.bind(ACLBindings.TOKEN_EXPIRES_IN).to(ACL_DEFAULT_EXPIRES_IN),
